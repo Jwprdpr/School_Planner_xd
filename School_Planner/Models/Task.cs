@@ -4,8 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Planner
+namespace School_Planner.NewFolder
 {
+    public enum Type
+    {
+        Exam,
+        Essay,
+        Explanation,
+        HomeWork,
+    }
     public enum Priority
     {
         High,
@@ -20,9 +27,11 @@ namespace School_Planner
         Complete,
         Cancelled,
     }
-    class Task
+    public class Task
     {
         public string Title { get; set; }
+        public Type Type { get; set; }
+        public int PercentageWorth { get; set; }
         public string Description { get; set; }
         public Priority Priority { get; set; }
         public Status Status { get; set; }
@@ -35,7 +44,7 @@ namespace School_Planner
         public Status CompleteTask()
         {
             Status = Status.Complete;
-            
+
             return Status;
         }
         public Status CancelTask()

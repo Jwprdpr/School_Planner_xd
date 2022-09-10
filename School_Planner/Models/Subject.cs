@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Planner
+namespace School_Planner.NewFolder
 {
-    internal class Subject
+    public class Subject
     {
         public string Title { get; set; }
         public string ClassRoom { get; set; }
