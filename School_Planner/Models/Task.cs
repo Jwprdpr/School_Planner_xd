@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace School_Planner.NewFolder
 {
-    public enum Type
+    public enum TypeOfTask
     {
         Exam,
         Essay,
@@ -27,10 +27,10 @@ namespace School_Planner.NewFolder
         Complete,
         Cancelled,
     }
-    public class Task
+    public class Tasky
     {
         public string Title { get; set; }
-        public Type Type { get; set; }
+        public TypeOfTask Type { get; set; }
         public int PercentageWorth { get; set; }
         public string Description { get; set; }
         public Priority Priority { get; set; }
