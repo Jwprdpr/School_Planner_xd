@@ -16,20 +16,18 @@ namespace School_Planner.NewFolder
         public Day(DateTime date, List<Task> tasks) : this(date)
         {
             Tasks = new ObservableCollection<Task>(tasks);
+            Date = date;
+            SetDayOfWeek();
         }
+
         public void SetDayOfWeek()
         {
             DayOfWeek = Date.DayOfWeek;
         }
-        public Day(DateTime date)
-        {
-            Date = date;
-            SetDayOfWeek();
-        }
+
         public void AddTask(Task task)
         {
             Tasks.Add(task);
         }
-
     }
 }

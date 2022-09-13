@@ -11,22 +11,23 @@ namespace School_Planner.NewFolder
         Exam,
         Essay,
         Explanation,
-        HomeWork,
-    }
+        HomeWork
+    };
     public enum Priority
     {
         High,
         Medium,
-        Low,
-    }
+        Low
+    };
     public enum Status
     {
         NotStarted,
         Started,
         Paused,
         Complete,
-        Cancelled,
-    }
+        Cancelled
+    };
+
     public class Tasky
     {
         public string Title { get; set; }
