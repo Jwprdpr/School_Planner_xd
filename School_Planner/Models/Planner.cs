@@ -9,10 +9,7 @@ namespace School_Planner.NewFolder
     public class Planner
     {
         public List<Subject> Subjects { get; set; } = new List<Subject>();
-        public Planner()
-        {
 
-        }
         public Planner(List<Subject> subjects)
         {
             Subjects = subjects;

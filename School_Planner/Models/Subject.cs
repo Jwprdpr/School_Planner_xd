@@ -22,10 +22,6 @@ namespace School_Planner.NewFolder
             Tasks = tasks;
         }
 
-        public Subject()
-        {
-        }
-
         public void AddTask(Tasky task)
         {
             Tasks.Add(task);

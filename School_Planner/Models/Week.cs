@@ -14,10 +14,7 @@ namespace School_Planner.NewFolder
         public Week(int weekNumber)
         {
             WeekNumber = weekNumber;
-        }
-        public Week(int weekNumber, List<Day> days) : this(weekNumber)
-        {
-            Days = days;
+            Days = new List<Day>();
         }
         public void AddDay(Day day)
         {

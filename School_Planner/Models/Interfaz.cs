@@ -126,7 +126,7 @@ namespace School_Planner.Models
             Console.WriteLine("Insert a description for your task");
             task.Description = Console.ReadLine();
             Console.WriteLine("Insert the level of priority");
-            task.Priority = (Console.ReadLine());
+            task.Priority = (Priority) Console.ReadLine();
             Console.WriteLine("what day should you deliver this?");
             task.DueDateTime = Console.ReadLine();
             task.Status = Status.NotStarted;
