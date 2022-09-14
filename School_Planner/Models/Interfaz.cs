@@ -9,6 +9,7 @@ namespace School_Planner.Models
 {
     public class Interfaz
     {
+        // constants for the interface interaction
         private const int OPTION_SEE_SUBJECT = 1;
         private const int OPTION_ADD_SUBJECT = 2;
         private const int OPTION_SEE_TASK = 3;
@@ -54,6 +55,7 @@ namespace School_Planner.Models
             Console.WriteLine($"{OPTION_SEE_TASK}. {SEE_TASK}");
             Console.WriteLine($"{OPTION_ADD_TASK}. {ADD_TASK}");
         }
+        // Method for print the details or properties of a task
         public void ShowTask(Tasky task)
         {
             Console.WriteLine(task.Type);
@@ -71,7 +73,7 @@ namespace School_Planner.Models
         }
 
         
-
+        // Process option. This method will allow us to connect the interfaz constants with every method
         public void ProcesarOpcion(int opcion)
         {
             Console.WriteLine();
@@ -113,14 +115,15 @@ namespace School_Planner.Models
             }
         }
 
-        public void AddTask(Subject subject, Priority priority, TypeOfTask type)
+        public Tasky AddTask()
         {
             Tasky task = new Tasky();
             Console.Write("Insert the info about the new task:");
             Console.WriteLine("Insert Title");
             task.Title = Console.ReadLine();
             Console.WriteLine("Insert Type of task");
-            task.Type = (Console.ReadLine());
+            int taskNum = Console.Read();                            // Variable to store user's task selection
+            task.Type = Enum.GetName(typeof(TypeOfTask), taskNum);   // Get enum name out of int value
             Console.WriteLine("How much percentage does this new task represent?");
             task.PercentageWorth = Console.Read();
             Console.WriteLine("Insert a description for your task");
@@ -140,6 +143,7 @@ namespace School_Planner.Models
             {
                 Console.WriteLine($">> ERROR: {ex.Message}");
             }
+            return task;
         }
 
         
