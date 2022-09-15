@@ -12,6 +12,7 @@ namespace School_Planner.NewFolder
         public string Title { get; set; }
         public string ClassRoom { get; set; }
         public string ProfessorName { get; set; }
+
         public List<Tasky> Tasks { get; set; }
 
         public Subject(string title, string classRoom, string professorName, List<Tasky> tasks)

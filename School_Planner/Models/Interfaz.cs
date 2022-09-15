@@ -9,6 +9,7 @@ namespace School_Planner.Models
 {
     public class Interfaz
     {
+        // constants for the interface interaction
         private const int OPTION_SEE_SUBJECT = 1;
         private const int OPTION_ADD_SUBJECT = 2;
         private const int OPTION_SEE_TASK = 3;
@@ -57,6 +58,7 @@ namespace School_Planner.Models
             Console.WriteLine($"{OPTION_SEE_TASK}. {SEE_TASK}");
             Console.WriteLine($"{OPTION_ADD_TASK}. {ADD_TASK}");
         }
+        // Method for print the details or properties of a task
         public void ShowTask(Tasky task)
         {
             Console.WriteLine(task.Type);
@@ -72,7 +74,7 @@ namespace School_Planner.Models
         }
 
         
-
+        // Process option. This method will allow us to connect the interfaz constants with every method
         public void ProcesarOpcion(int opcion)
         {
             Console.WriteLine();
