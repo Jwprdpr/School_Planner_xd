@@ -18,12 +18,12 @@ namespace School_Planner.Models
         public const int OPTION_EXIT = 7;
 
         private const string TITLE = "School Planner";
-        private const string SEE_SUBJECT = "VER PRODUCTOS";
+        private const string SEE_SUBJECT = "See subject details";
         private const string ADD_SUBJECT = "Add a new subject to your planner";
         private const string SEE_TASK = "See task Details";
         private const string ADD_TASK = "Add a new task in this subject";
-        private const string COMPLETED_TASK = "Change the status of this task to completed ";
-        private const string CANCELED_TASK = "Change the status of this task to canceled ";
+        private const string COMPLETED_TASK = "Change the status of this task to completed";
+        private const string CANCELED_TASK = "Change the status of this task to canceled";
 
         private readonly Planner _planner;
         private readonly Subject _subject;
@@ -32,12 +32,14 @@ namespace School_Planner.Models
 
         public Interfaz()
         {
-            _planner = new Planner();
-            _subject = new Subject();
+            List<Subject> initialSubjects = new List<Subject>();
+            _planner = new Planner(initialSubjects);
+            List<Tasky> initialTasks = new List<Tasky>();
+            _subject = new Subject("Subject title", "Classroom name", "professor name", initialTasks);
             _task = new Tasky();
         }
 
-        public void ShowPlanner()
+        public int ShowPlanner()
         {
             Console.WriteLine($"=== Main Page of {TITLE} ===");
             Console.WriteLine("\nYour Planner");
@@ -45,7 +47,8 @@ namespace School_Planner.Models
             Console.WriteLine($"{OPTION_SEE_SUBJECT}. {SEE_SUBJECT}");
             Console.WriteLine($"{OPTION_ADD_SUBJECT}. {ADD_SUBJECT}");
             Console.WriteLine($"{OPTION_EXIT}. EXIT PLANNER");
-            Console.ReadLine();
+            int option = Console.Read();
+            return option;
         }
         public void ShowSubject(Subject subject)
         {
@@ -66,8 +69,6 @@ namespace School_Planner.Models
 
             Console.WriteLine($"{OPTION_COMPLETE_TASK} . {COMPLETED_TASK}");
             Console.WriteLine($"{OPTION_CANCELE_TASK} . {COMPLETED_TASK}");
-
-
         }
 
         
@@ -78,7 +79,7 @@ namespace School_Planner.Models
             switch (opcion)
             {
                 case OPTION_SEE_SUBJECT:
-                    ShowSubject(_subjects);
+                    ShowSubject(_subject);
                     break;
                 case OPTION_ADD_TASK:
                     Console.WriteLine($"== {ADD_TASK} ==");
@@ -113,22 +114,31 @@ namespace School_Planner.Models
             }
         }
 
-        public void AddTask(Subject subject, Priority priority, TypeOfTask type)
+        public void AddTask(Subject subject)
         {
             Tasky task = new Tasky();
-            Console.Write("Insert the info about the new task:");
-            Console.WriteLine("Insert Title");
+            Console.Write("Insert the info about the new task :\n\n");
+            Console.WriteLine("Insert Title : ");
             task.Title = Console.ReadLine();
-            Console.WriteLine("Insert Type of task");
-            task.Type = (Console.ReadLine());
-            Console.WriteLine("How much percentage does this new task represent?");
+
+            Console.WriteLine("\n\nSelect Type of task : \n\n");
+            task.ShowAllTaskTypes();
+            Console.WriteLine("\n\nType : ");
+            task.Type = (TypeOfTask) Enum.ToObject(typeof(TypeOfTask), Console.Read());
+
+            Console.WriteLine("How much percentage does this new task represent? (0 - 100) : ");
             task.PercentageWorth = Console.Read();
-            Console.WriteLine("Insert a description for your task");
+
+            Console.WriteLine("Insert a description for your task : ");
             task.Description = Console.ReadLine();
-            Console.WriteLine("Insert the level of priority");
-            task.Priority = (Priority) Console.ReadLine();
-            Console.WriteLine("what day should you deliver this?");
-            task.DueDateTime = Console.ReadLine();
+
+            Console.WriteLine("\n\nInsert the level of priority : \n\n");
+            task.ShowAllPriorities();
+            Console.WriteLine("\n\nPriority : ");
+            task.Priority = (Priority) Enum.ToObject(typeof(Priority), Console.Read());
+
+            Console.WriteLine("what day should you deliver this? (mm/dd/yyyy) : ");
+            task.DueDateTime = (DateTime)Convert.ToDateTime(Console.ReadLine());
             task.Status = Status.NotStarted;
             
             try

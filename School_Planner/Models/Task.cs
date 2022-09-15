@@ -38,6 +38,10 @@ namespace School_Planner.NewFolder
         public Status Status { get; set; }
         public DateTime DueDateTime { get; set; }
 
+        public Tasky()
+        {
+        }
+
         public void UpdatePriority(Priority priority)
         {
             Priority = priority;
@@ -53,6 +57,36 @@ namespace School_Planner.NewFolder
             Status = Status.Cancelled;
 
             return Status;
+        }
+
+        public void ShowAllTaskTypes()
+        {
+            int taskNum = 0;
+            foreach ( TypeOfTask task in Enum.GetValues(typeof(TypeOfTask)) )
+            {
+                Console.WriteLine($"{taskNum}. {task}\n");
+                taskNum += 1;
+            }
+        }
+
+        public void ShowAllPriorities()
+        {
+            int priorityNum = 0;
+            foreach ( Priority priority in Enum.GetValues(typeof(Priority)) )
+            {
+                Console.WriteLine($"{priorityNum}. {priority}\n");
+                priorityNum += 1;
+            }
+        }
+
+        public void ShowAllStatus()
+        {
+            int statusNum = 0;
+            foreach ( Status status in Enum.GetValues(typeof(Status)) )
+            {
+                Console.WriteLine($"{statusNum}. {status}\n");
+                statusNum += 1;
+            }
         }
     }
 }
