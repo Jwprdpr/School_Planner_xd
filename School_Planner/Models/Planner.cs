@@ -8,23 +8,21 @@ namespace School_Planner.NewFolder
 {
     public class Planner
     {
-        public List<Subject> Subjects { get; set; } = new List<Subject>();
-        public List<User> Users { get; set; }
+        //properties
+        public List<Week> Weeks { get; private set; } = new List<Week>();
 
-        public Planner(List<Subject> subjects, List<User> users)
+        public Planner() { }
+
+        public Planner(List<Week> weeks)
         {
-            Subjects = subjects;
-            Users = users;
+            Weeks = weeks;
         }
 
-        public void AddSubject(Subject subject)
+        //methods
+        public void AddWeek(Week week)
         {
-            Subjects.Add(subject);
+            Weeks.Add(week);
         }
 
-        public void AddUser(User user)
-        {
-            Users.Add(user);
-        }
     }
 }

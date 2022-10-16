@@ -8,17 +8,26 @@ namespace School_Planner.NewFolder
 {
     public class Week
     {
-        public int WeekNumber { get; set; }
-        public List<Day> Days { get; set; }
+
+        //properties
+        public int WeekNumber { get; private set; }
+        public List<Day> Days { get; private set; } = new List<Day>();
 
         public Week(int weekNumber)
         {
             WeekNumber = weekNumber;
-            Days = new List<Day>();
         }
+
+        public Week(int weekNumber, List<Day> days) : this(weekNumber)
+        {
+            Days = days;
+        }
+
+        //methods
         public void AddDay(Day day)
         {
             Days.Add(day);
         }
+
     }
 }

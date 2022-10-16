@@ -6,11 +6,24 @@ using System.Threading.Tasks;
 
 namespace School_Planner.NewFolder
 {
-    public class User
+    public static class User
     {
-        public string StudentID { get; set; }
-        public string UserName { get; set; }
-        public DateTime DateTime { get; set; }
-        public Planner Planner { get; set; }
+
+        public static string StudentID { get; set; }
+        public static string Name { get; set; }
+        public static DateTime DOB { get; set; }
+        public static int Age
+        {
+            get
+            {
+                DateTime today = DateTime.Today;
+                int age = today.Year - DOB.Year;
+                if (DOB > today.AddYears(-Age)) age--;
+                return age;
+            }
+        }
+
+        public static Planner Planner { get; set; }
+
     }
 }

@@ -12,27 +12,32 @@ namespace School_Planner.NewFolder
 
     public class Day
     {
-        public DayOfWeek DayOfWeek { get; set; }
-        public DateTime Date { get; set; }
-        public ObservableCollection<Task> Tasks { get; set; }
 
-        //With the dateTime property wi will be able to asociate the Class day
-        // with a day in the grid 
-        public Day(DateTime date, List<Task> tasks) 
+        //properties
+        public DayOfWeek DayOfWeek { get; private set; }
+        public DateTime Date { get; private set; }
+        public ObservableCollection<Task> Tasks { get; private set; }
+
+        //instanciating the observable collection. Taking in the list of tasks and turning it into an observable collection
+        public Day(DateTime date, List<Task> tasks) : this(date)
         {
             Tasks = new ObservableCollection<Task>(tasks);
-            Date = date;
-            SetDayOfWeek();
         }
 
-        public void SetDayOfWeek()
+        public Day(DateTime date)
         {
-            DayOfWeek = Date.DayOfWeek;
+            Date = date;
+            SetDayOfWeek();
         }
 
         public void AddTask(Task task)
         {
             Tasks.Add(task);
+        }
+
+        private void SetDayOfWeek()
+        {
+            DayOfWeek = Date.DayOfWeek;
         }
     }
 }

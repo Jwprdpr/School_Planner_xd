@@ -1,24 +1,22 @@
 ﻿using System;
+using School_Planner.Models;
+using School_Planner.Interfaces;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace School_Planner.NewFolder
+namespace StudentPlanner.Models
 {
-    public enum TypeOfTask
-    {
-        Exam,
-        Essay,
-        Explanation,
-        HomeWork
-    };
+
     public enum Priority
     {
         High,
         Medium,
         Low
-    };
+    }
+
     public enum Status
     {
         NotStarted,
@@ -26,67 +24,160 @@ namespace School_Planner.NewFolder
         Paused,
         Complete,
         Cancelled
-    };
+    }
 
-    public class Tasky
+    public abstract class Task : INotifyPropertyChanged
     {
-        public string Title { get; set; }
-        public TypeOfTask Type { get; set; }
-        public int PercentageWorth { get; set; }
-        public string Description { get; set; }
-        public Priority Priority { get; set; }
-        public Status Status { get; set; }
-        public DateTime DueDateTime { get; set; }
 
-        public Tasky()
+        private string _title;
+        private string _description;
+        private Priority _priority;
+        private Status _status;
+        private DateTime _dueDatetime;
+        private DateTime _createdDatetime;
+        private DateTime _completeDatetime;
+        private bool _isComplete;
+        private bool _isCancelled;
+
+        public string Title
         {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                RaisePropertyChanged("Title");
+                Toastr.Success("Updated", "The task title has been updated");
+            }
+        }
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                RaisePropertyChanged("Description");
+                Toastr.Success("Updated", "The task description has been updated");
+            }
+        }
+        public Priority Priority
+        {
+            get { return _priority; }
+            set
+            {
+                _priority = value;
+                RaisePropertyChanged("Priority");
+                Toastr.Success("Updated", "The task priority has been updated");
+            }
+        }
+        public Status Status
+        {
+            get { return _status; }
+            set
+            {
+                _status = value;
+                RaisePropertyChanged("Status");
+            }
+        }
+        public DateTime DueDatetime
+        {
+            get { return _dueDatetime; }
+            set
+            {
+                _dueDatetime = value;
+                RaisePropertyChanged("DueDatetime");
+                RaisePropertyChanged("DueDateReadable");
+                Toastr.Success("Updated", "The task due date has been updated");
+            }
+        }
+        public DateTime CreatedDatetime
+        {
+            get { return _createdDatetime; }
+            set { _createdDatetime = value; }
+        }
+        public DateTime CompleteDatetime
+        {
+            get { return _completeDatetime; }
+            set
+            {
+                _completeDatetime = value;
+                RaisePropertyChanged("CompleteDatetime");
+            }
+        }
+        public bool IsComplete
+        {
+            get { return _isComplete; }
+            set
+            {
+                _isComplete = value;
+                RaisePropertyChanged("IsComplete");
+            }
+        }
+        public bool IsCancelled
+        {
+            get { return _isCancelled; }
+            set
+            {
+                _isCancelled = value;
+                RaisePropertyChanged("IsCancelled");
+            }
         }
 
-        public void UpdatePriority(Priority priority)
+        public string DueDateReadable
         {
+            get
+            {
+                int daysDiff = ((TimeSpan)(DueDatetime - DateTime.Now)).Days;
+                if (daysDiff > 0) return "Due in " + daysDiff + " day" + (daysDiff > 1 ? "s" : "");
+                else return "This task is " + (IsComplete ? "Complete" : "Overdue");
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            Database.SaveTasks();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public Task() { }
+
+        public Task(
+            string title, string description, Priority priority,
+            Status status, DateTime dueDatetime, DateTime createdDatetime
+        ) : this(title, description, priority, dueDatetime, createdDatetime)
+        {
+            Status = status;
+        }
+
+        public Task(string title, string description, Priority priority, DateTime dueDatetime, DateTime createdDatetime)
+        {
+            Title = title;
+            Description = description;
             Priority = priority;
+            DueDatetime = dueDatetime;
+            CreatedDatetime = createdDatetime;
+
+            Status = Status.NotStarted;
         }
-        public Status CompleteTask()
+
+        public void CompleteTask()
         {
             Status = Status.Complete;
-
-            return Status;
+            CompleteDatetime = DateTime.Now;
+            IsComplete = true;
+            Toastr.Success("Complete", "The task has been marked as complete");
         }
-        public Status CancelTask()
+
+        public void CancelTask()
         {
             Status = Status.Cancelled;
-
-            return Status;
+            IsCancelled = true;
+            Toastr.Info("Cancelled", "The task has been cancelled");
         }
 
-        public void ShowAllTaskTypes()
+        public override string ToString()
         {
-            int taskNum = 0;
-            foreach ( TypeOfTask task in Enum.GetValues(typeof(TypeOfTask)) )
-            {
-                Console.WriteLine($"{taskNum}. {task}\n");
-                taskNum += 1;
-            }
-        }
-
-        public void ShowAllPriorities()
-        {
-            int priorityNum = 0;
-            foreach ( Priority priority in Enum.GetValues(typeof(Priority)) )
-            {
-                Console.WriteLine($"{priorityNum}. {priority}\n");
-                priorityNum += 1;
-            }
-        }
-
-        public void ShowAllStatus()
-        {
-            int statusNum = 0;
-            foreach ( Status status in Enum.GetValues(typeof(Status)) )
-            {
-                Console.WriteLine($"{statusNum}. {status}\n");
-                statusNum += 1;
-            }
+            return Title;
         }
     }
 }
